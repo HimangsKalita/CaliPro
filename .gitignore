@@ -14,12 +14,10 @@
 .cxx
 local.properties
 
-# Created by https://www.toptal.com/developers/gitignore/api/kotlin,android
-# Edit at https://www.toptal.com/developers/gitignore?templates=kotlin,android
-
 ### Android ###
 # Gradle files
 .gradle/
+gradlew*
 build/
 
 # Local configuration file (sdk path, etc)

@@ -3,9 +3,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="darkBlue">#0075ff</color>
+    <color name="cursorBlue">#008ACF</color>
     <color name="lightBlue">#def5ff</color>
-    <color name="grey">#ECF2F8</color>
+    <color name="grey">#E6ECF3</color>
+    <color name="lightgrey">#F6F9FC</color>
     <color name="darkGrey">#eaeaea</color>
     <color name="darkerGrey">#bababf</color>
-    <color name="greenBlue">#c7fff6</color>
+    <color name="pink">#E2E0FF</color>
+    <color name="red">#FF0000</color>
 </resources>
