@@ -1,6 +1,7 @@
 package com.himangsKalita.calipro
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -8,12 +9,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.himangsKalita.calipro.databinding.ActivityMainBinding
-import com.notkamui.keval.Keval
-import com.notkamui.keval.KevalInvalidArgumentException
-import com.notkamui.keval.KevalInvalidExpressionException
-import com.notkamui.keval.KevalInvalidSymbolException
-import com.notkamui.keval.KevalZeroDivisionException
-import kotlin.math.truncate
+import net.objecthunter.exp4j.Expression
+import net.objecthunter.exp4j.ExpressionBuilder
+
 
 val operands = listOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
 val operators = listOf("+", "-", "÷", "×")
@@ -190,9 +188,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnEquals.setOnClickListener {
 
-            binding.etQuery.setText(binding.tvResult.text.toString())
-            binding.etQuery.setSelection(binding.etQuery.text.toString().length)
-            binding.tvResult.text = ""
+            if (binding.tvResult.textColors.defaultColor == Color.BLACK) {
+
+                binding.etQuery.setText(binding.tvResult.text.toString())
+                binding.etQuery.setSelection(binding.etQuery.text.toString().length)
+                binding.tvResult.text = ""
+            }
+
         }
     }
 
@@ -206,7 +208,7 @@ class MainActivity : AppCompatActivity() {
 
                 binding.etQuery.setText(query)
                 binding.etQuery.setSelection(1)
-            }else if (query in operators || query == ".") {
+            } else if (query in operators || query == ".") {
 
                 binding.etQuery.append(query)
             }
@@ -248,48 +250,54 @@ class MainActivity : AppCompatActivity() {
                 val expression = query
                     .replace("×", "*")
                     .replace("÷", "/")
-                val result = Keval.eval(expression)
+
                 binding.tvResult.setTextColor(resources.getColor(R.color.black, null))
 
-                if (result.equals(truncate(result))) {
+                val e: Expression = ExpressionBuilder(expression)
+                    .build()
 
-                    binding.tvResult.text = result.toInt().toString()
-                }else {
+                val result: Double = e.evaluate()
 
-                    binding.tvResult.text = result.toString()
+                val resultString = result.toString()
+
+                val parts = resultString.split(".")
+                val integerPart = parts[0]
+                val decimalPart = if (parts.size > 1) parts[1] else ""
+
+                val formattedResult = if (decimalPart.all { it == '0' }) {
+                    integerPart
+                } else {
+                    resultString
                 }
-
-
-
-            } catch (e: KevalZeroDivisionException) {
 
                 binding.tvResult.apply {
-                    text = "Can't divide by 0"
-                    setTextColor(resources.getColor(R.color.red, null))
+                    text = formattedResult
+                    setTextColor(resources.getColor(R.color.black, null))
                 }
-            } catch (e: KevalInvalidArgumentException) {
+
+            } catch (e: ArithmeticException) {
 
                 binding.tvResult.apply {
-                    text = "Invalid Argument!"
+                    text = "Can't divide by 0!"
                     setTextColor(resources.getColor(R.color.red, null))
                 }
-            } catch (e: KevalInvalidExpressionException) {
+
+            }catch (e: IllegalArgumentException) {
 
                 binding.tvResult.apply {
                     text = "Invalid Expression!"
                     setTextColor(resources.getColor(R.color.red, null))
                 }
-            } catch (e: KevalInvalidSymbolException) {
 
-                binding.tvResult.apply {
-                    text = "Invalid Operator!"
-                    setTextColor(resources.getColor(R.color.red, null))
-                }
             } catch (e: Exception) {
 
-                binding.tvResult.text = "Error!"
+                binding.tvResult.apply {
+                    text = "Error!"
+                    setTextColor(resources.getColor(R.color.red, null))
+                }
+
             }
-        }else {
+        } else {
 
             binding.tvResult.text = ""
         }

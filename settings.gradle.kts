@@ -19,6 +19,8 @@ dependencyResolutionManagement {
     }
 }
 
+
+
 rootProject.name = "CaliPro"
 include(":app")
  

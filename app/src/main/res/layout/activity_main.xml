@@ -23,26 +23,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:gravity="end"
+            android:gravity="end|center_vertical"
             android:paddingTop="30dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:text=""
-            android:inputType="textNoSuggestions"
+            android:textSize="70sp"
             android:maxLines="1"
-            android:textCursorDrawable="@drawable/blue_cursor"
-            android:textSize="70sp" />
+            android:autoSizeTextType="uniform"
+            android:inputType="textNoSuggestions"
+            android:textCursorDrawable="@drawable/blue_cursor" />
 
         <TextView
             android:id="@+id/tvResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
+            android:gravity="end|center_vertical"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:text=""
-            android:maxLines="1"
             android:textSize="50sp"
+            android:maxLines="1"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="70dp"
+            android:autoSizeMinTextSize="32sp"
+            android:autoSizeStepGranularity="2sp"
             android:background="@drawable/query_output_theme"/>
 
     </LinearLayout>
@@ -73,7 +78,7 @@
             <Button
                 android:id="@+id/btnBrackets"
                 style="@style/customCircleButton"
-                android:backgroundTint="@color/pink"
+                android:backgroundTint="@color/lightBlue"
                 android:text="( )"
                 android:textAlignment="center"
                 android:textColor="@color/black" />

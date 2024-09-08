@@ -50,6 +50,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation("com.notkamui.libs:keval:1.1.1")
-
+    implementation(libs.exp4j)
 }
